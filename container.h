@@ -57,8 +57,16 @@ int Container::getWeight() const{
 }
 
 //Methods
-bool Container::operator==(const Container* rights){
-  return -1;
+bool Container::operator==(const Container* right){ 
+  return id == right->id && weight == right->weight && type == right->type;
+}
+
+bool Container::operator==(const Container& right){ 
+  return id == right.id && weight == right.weight && type == right.type;
+}
+
+bool Container::operator<(const Container* right){ 
+  return id < right->id;
 }
 
 #endif
