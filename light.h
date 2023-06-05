@@ -17,10 +17,29 @@ public:
   double getConsumption() const;
 };
 
-LightContainer::LightContainer(int _id, int _weight):Container(_id, _weight, LIGHT){
-  id = _id;
-  weight = _weight;
-  type = LIGHT;
+//Constructors
+LightContainer::LightContainer(int _id, int _weight)
+: Container(_id, _weight, type){
+    id = _id;
+    if (_weight < 0){
+      weight = 0;
+    } else {
+      weight = _weight;
+    }
+    type = LIGHT;
+  
+}
+
+LightContainer::LightContainer(const LightContainer &other)
+  : Container(other){
+    id = other.id;
+    weight = other.weight;
+    type = other.type;
+}
+
+//Methods
+double LightContainer::getConsumption() const {
+  return weight * 2.5;
 }
 
 #endif

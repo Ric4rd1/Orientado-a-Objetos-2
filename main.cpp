@@ -9,7 +9,6 @@
 using namespace std;
 
 int main(){
-    //hola
     LightContainer c1(1, 300);
     return 0;
 }

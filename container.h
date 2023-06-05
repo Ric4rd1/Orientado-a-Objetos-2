@@ -15,13 +15,21 @@ protected:
   ContainerType type;
 
 public:
+  //Constructors
   Container(int, int, ContainerType);
   Container(const Container&);
 
+  //Getters
   ContainerType getType() const;
   int getId() const;
   int getWeight() const;
 
+  //Setters
+  void setType(ContainerType);
+  void setId(int);
+  void setWeight(int);
+
+  //Methods
   bool operator==(const Container*);
   bool operator==(const Container&);
   bool operator<(const Container*);
@@ -33,7 +41,11 @@ public:
 //Constructors
 Container::Container(int _id, int _weight, ContainerType _type){
     id = _id;
-    weight = _weight;
+    if (_weight < 0){
+      weight = 0;
+    } else {
+      weight = _weight;
+    }
     type = _type;
 }
 
@@ -56,6 +68,19 @@ int Container::getWeight() const{
   return weight;
 }
 
+//Setters 
+void Container::setId(int _id){
+  id = _id;
+}
+
+void Container::setWeight(int _weight){
+  weight = _weight;
+}
+
+void Container::setType(ContainerType _type){
+  type = _type;
+}
+
 //Methods
 bool Container::operator==(const Container* right){ 
   return id == right->id && weight == right->weight && type == right->type;
@@ -66,8 +91,19 @@ bool Container::operator==(const Container& right){
 }
 
 bool Container::operator<(const Container* right){ 
-  return id < right->id;
+  if (type == right -> type){
+    return id < right->id;
+  } else {
+    return type < right->type;
+  }
+}
+
+bool Container::operator<(const Container& right){ 
+  if (type == right.type){
+    return id < right.id;
+  } else {
+    return type < right.type;
+  }
 }
 
 #endif
-//test
