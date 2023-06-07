@@ -19,15 +19,7 @@ public:
 
 //Constructors
 LiquidContainer::LiquidContainer(int _id, int _weight)
-: HeavyContainer(_id, _weight, type){
-    id = _id;
-    if (_weight < 0){
-      weight = 0;
-    } else {
-      weight = _weight;
-    }
-    type = LIQUID;
-  
+: HeavyContainer(_id, _weight, LIQUID){
 }
 
 LiquidContainer::LiquidContainer(const LiquidContainer &other)

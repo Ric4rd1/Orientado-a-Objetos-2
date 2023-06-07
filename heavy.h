@@ -20,15 +20,11 @@ public:
 
 //Constructors
 HeavyContainer::HeavyContainer(int _id, int _weight)
-: Container(_id, _weight, type){
-    id = _id;
-    if (_weight < 0){
-      weight = 0;
-    } else {
-      weight = _weight;
-    }
-    type = HEAVY;
-  
+: Container(_id, _weight, HEAVY){
+}
+
+HeavyContainer::HeavyContainer(int _id, int _weight, ContainerType T)
+: Container(_id, _weight, T){
 }
 
 HeavyContainer::HeavyContainer(const HeavyContainer &other)

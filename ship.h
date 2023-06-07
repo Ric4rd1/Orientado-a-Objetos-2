@@ -61,4 +61,25 @@ public:
   std::string toString() const;
 };
 
+//Constructors
+Ship::Ship(int _id, Port *_currentPort, int _totalWeight, 
+  int _maxNumberOfAllContainers, int _maxNumberOfHeavyContainers, 
+  int _maxNumberOfRefrigeratedContainers, int _maxNumberOfLiquidContainers, 
+  double _fuelConsumptionPerKM)
+  : SimpleShip(_id){
+  currentWeight = 0;
+  currentNumberOfAllContainers = 0;
+  currentNumberOfHeavyContainers = 0;
+  currentNumberOfRefrigeratedContainers = 0;
+  currentNumberOfLiquidContainers = 0;
+  fuel = 0;
+  currentPort = _currentPort;
+  totalWeight = _totalWeight;
+  maxNumberOfAllContainers = _maxNumberOfAllContainers;
+  maxNumberOfHeavyContainers = _maxNumberOfHeavyContainers;
+  maxNumberOfRefrigeratedContainers = _maxNumberOfRefrigeratedContainers;
+  maxNumberOfLiquidContainers = _maxNumberOfLiquidContainers;
+  fuelConsumptionPerKM = _fuelConsumptionPerKM;
+}
+
 #endif
