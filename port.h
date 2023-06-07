@@ -46,4 +46,84 @@ public:
   std::string toString() const;
 };
 
+//Constructors
+Port::Port(int _id, double _x, double _y){
+  id = _id;
+  x = _x;
+  y = _y;
+}
+
+Port::Port(const Port &other){
+  id = other.id;
+  x = other.x;
+  y = other.y;
+  containers = other.containers;
+  history = other.history;
+  current = other.current;
+}
+
+//Getters
+int Port::getId() const{
+  return id;
+}
+
+double Port::getX() const{
+  return x;
+}
+
+double Port::getY() const{
+  return y;
+}
+
+std::list<Container*> Port::getContainers() const{
+  return containers;
+}
+
+std::list<SimpleShip*> Port::getHistory() const{
+  return history;
+}
+
+std::list<SimpleShip*> Port::getCurrent() const{
+  return current;
+}
+
+//Methods
+double Port::getDistance(Port *other) const{
+  return sqrt(pow(x - other->x, 2) + pow(y - other->y, 2));
+}
+
+void Port::incomingShip(SimpleShip *ship){
+  if (find(current.begin(), current.end(), *ship) != current.end()){
+    cout << "Ship already exists" << endl;
+  } else {
+    current.push_back(ship);
+  }
+}
+
+void Port::outgoingShip(SimpleShip *ship){
+  if (find(current.begin(), current.end(), *ship) != current.end()){
+    current.remove(ship);
+    history.push_back(ship);
+  } else {
+    cout << "Ship does not exist" << endl;
+  }
+}
+
+bool Port::contains(Container *container){
+  return find(containers.begin(), containers.end(), container) != containers.end();
+}
+
+void Port::add(Container *container){
+  containers.push_back(container);
+}
+
+void Port::remove(Container *container){
+  containers.remove(container);
+}
+
+std::string Port::toString() const{
+  std::stringstream ss;
+  ss << "Port " << id << " (" << x << ", " << y << ")" << endl;
+  return 0;
+}
 #endif

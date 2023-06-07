@@ -82,4 +82,89 @@ Ship::Ship(int _id, Port *_currentPort, int _totalWeight,
   fuelConsumptionPerKM = _fuelConsumptionPerKM;
 }
 
+Ship::Ship(const Ship &other)
+  : SimpleShip(other){
+    currentWeight = other.currentWeight;
+    currentNumberOfAllContainers = other.currentNumberOfAllContainers;
+    currentNumberOfHeavyContainers = other.currentNumberOfHeavyContainers;
+    currentNumberOfRefrigeratedContainers = other.currentNumberOfRefrigeratedContainers;
+    currentNumberOfLiquidContainers = other.currentNumberOfLiquidContainers;
+    fuel = other.fuel;
+    currentPort = other.currentPort;
+    totalWeight = other.totalWeight;
+    maxNumberOfAllContainers = other.maxNumberOfAllContainers;
+    maxNumberOfHeavyContainers = other.maxNumberOfHeavyContainers;
+    maxNumberOfRefrigeratedContainers = other.maxNumberOfRefrigeratedContainers;
+    maxNumberOfLiquidContainers = other.maxNumberOfLiquidContainers;
+    fuelConsumptionPerKM = other.fuelConsumptionPerKM;
+}
+
+//Getters
+int Ship::getId() const{
+  return id;
+}
+
+int Ship::getCurrentWeight() const{
+  return currentWeight;
+}
+
+int Ship::getTotalWeight() const{
+  return totalWeight;
+}
+
+int Ship::getCurrentNumberOfAllContainers() const{
+  return currentNumberOfAllContainers;
+}
+
+int Ship::getMaxNumberOfAllContainers() const{
+  return maxNumberOfAllContainers;
+}
+
+int Ship::getCurrentNumberOfHeavyContainers() const{
+  return currentNumberOfHeavyContainers;
+}
+
+int Ship::getMaxNumberOfHeavyContainers() const{
+  return maxNumberOfHeavyContainers;
+}
+
+int Ship::getCurrentNumberOfRefrigeratedContainers() const{
+  return currentNumberOfRefrigeratedContainers;
+}
+
+int Ship::getMaxNumberOfRefrigeratedContainers() const{
+  return maxNumberOfRefrigeratedContainers;
+}
+
+int Ship::getCurrentNumberOfLiquidContainers() const{
+  return currentNumberOfLiquidContainers;
+}
+
+int Ship::getMaxNumberOfLiquidContainers() const{
+  return maxNumberOfLiquidContainers;
+}
+
+double Ship::getFuel() const{
+  return fuel;
+}
+
+double Ship::getFuelConsumptionPerKM() const{
+  return fuelConsumptionPerKM;
+}
+
+Port* Ship::getCurrentPort() const{
+  return currentPort;
+}
+
+std::list<Container*> Ship::getCurrentContainers() const{
+  return containers;
+}
+
+//Methods
+bool Ship::sailTo(Port *port){
+  return 0;
+}
+
+
+
 #endif
