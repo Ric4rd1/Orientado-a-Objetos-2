@@ -13,6 +13,8 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
+#include <iostream>
+
 #include "container.h"
 #include "simpleship.h"
 
@@ -31,9 +33,9 @@ public:
   int getId() const;
   double getX() const;
   double getY() const;
-  std::list<Container*> getContainers() const;
-  std::list<SimpleShip*> getHistory() const;
-  std::list<SimpleShip*> getCurrent() const;
+  std::list<Container*> getContainers();
+  std::list<SimpleShip*> getHistory();
+  std::list<SimpleShip*> getCurrent();
 
   double getDistance(Port*) const;
   void incomingShip(SimpleShip*);
@@ -75,15 +77,15 @@ double Port::getY() const{
   return y;
 }
 
-std::list<Container*> Port::getContainers() const{
+std::list<Container*> Port::getContainers() {
   return containers;
 }
 
-std::list<SimpleShip*> Port::getHistory() const{
+std::list<SimpleShip*> Port::getHistory() {
   return history;
 }
 
-std::list<SimpleShip*> Port::getCurrent() const{
+std::list<SimpleShip*> Port::getCurrent() {
   return current;
 }
 
@@ -93,19 +95,19 @@ double Port::getDistance(Port *other) const{
 }
 
 void Port::incomingShip(SimpleShip *ship){
-  if (find(current.begin(), current.end(), *ship) != current.end()){
-    cout << "Ship already exists" << endl;
+  if (find(current.begin(), current.end(), ship) != current.end()){
+    std::cout << "Ship already exists" << std::endl;
   } else {
     current.push_back(ship);
   }
 }
 
 void Port::outgoingShip(SimpleShip *ship){
-  if (find(current.begin(), current.end(), *ship) != current.end()){
+  if (find(current.begin(), current.end(), ship) != current.end()){
     current.remove(ship);
     history.push_back(ship);
   } else {
-    cout << "Ship does not exist" << endl;
+    history.push_back(ship);
   }
 }
 
@@ -123,7 +125,7 @@ void Port::remove(Container *container){
 
 std::string Port::toString() const{
   std::stringstream ss;
-  ss << "Port " << id << " (" << x << ", " << y << ")" << endl;
-  return 0;
+  //ss << "Port " << id << " (" << x << ", " << y << ")" << endl;
+  return "0";
 }
 #endif

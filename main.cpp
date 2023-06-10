@@ -19,6 +19,13 @@ int main(int argc, char* argv[]) {
   ifstream inputFile;
   ofstream outputFile;
 
+  vector<Container*> containers;
+  vector<SimpleShip*> ships;
+  vector<Port*> ports;
+
+  int idContainer, idPorts, idShip;
+  idContainer = idPorts = idShip = 0;
+
 
   if (argc != 3) {
     cout << "usage: " << argv[0] << " input_file output_file\n";
@@ -34,7 +41,20 @@ int main(int argc, char* argv[]) {
   outputFile.open(argv[2]);
 
   // TO DO
+  /*
+  container
+  puertos
+  ship
+*/
+  inputFile>>c>>s>>p>>n;
+  for(){
 
+  }
+  inputFile>>tipoEvento;
+
+  inputFile>>x>>y;
+  ports[idPorts] = new Port(idPorts, x, y);
+  idPorts++;
 
   inputFile.close();
   outputFile.close();

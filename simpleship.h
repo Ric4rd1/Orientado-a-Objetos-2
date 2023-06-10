@@ -18,11 +18,11 @@ public:
 
   int getId() const;
 
-  bool operator==(const SimpleShip*);
-  bool operator==(const SimpleShip&);
+  bool operator==(const SimpleShip*) const;
+  bool operator==(const SimpleShip&) const;
 
-  bool operator<(const SimpleShip*);
-  bool operator<(const SimpleShip&);
+  bool operator<(const SimpleShip*) const;
+  bool operator<(const SimpleShip&) const;
 
   virtual std::string toString() const = 0;
 };
@@ -42,19 +42,19 @@ int SimpleShip::getId() const{
 }
 
 //Methods
-bool SimpleShip::operator==(const SimpleShip *other){
+bool SimpleShip::operator==(const SimpleShip *other)  const{
   return id == other->id;
 }
 
-bool SimpleShip::operator==(const SimpleShip &other){
+bool SimpleShip::operator==(const SimpleShip &other) const{
   return id == other.id;
 }
 
-bool SimpleShip::operator<(const SimpleShip *other){
+bool SimpleShip::operator<(const SimpleShip *other)  const{
   return id < other->id;
 }
 
-bool SimpleShip::operator<(const SimpleShip &other){
+bool SimpleShip::operator<(const SimpleShip &other)  const{
   return id < other.id;
 }
 #endif
