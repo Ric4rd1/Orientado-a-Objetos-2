@@ -95,9 +95,7 @@ double Port::getDistance(Port *other) const{
 }
 
 void Port::incomingShip(SimpleShip *ship){
-  if (find(current.begin(), current.end(), ship) != current.end()){
-    std::cout << "Ship already exists" << std::endl;
-  } else {
+  if (find(current.begin(), current.end(), ship) == current.end()){
     current.push_back(ship);
   }
 }
@@ -105,9 +103,9 @@ void Port::incomingShip(SimpleShip *ship){
 void Port::outgoingShip(SimpleShip *ship){
   if (find(current.begin(), current.end(), ship) != current.end()){
     current.remove(ship);
-    history.push_back(ship);
-  } else {
-    history.push_back(ship);
+   if (find(history.begin(), history.end(), ship) == history.end()) {
+    	history.push_back(ship);
+  	}
   }
 }
 
