@@ -13,18 +13,20 @@
 #include <sstream>
 #include <iomanip>
 #include <algorithm>
-#include <iostream>
+
 
 #include "container.h"
 #include "simpleship.h"
+
+using namespace std;
 
 class Port {
 private:
   int id;
   double x, y;
-  std::list<Container*> containers;
-  std::list<SimpleShip*> history;
-  std::list<SimpleShip*> current;
+  list<Container*> containers;
+  list<SimpleShip*> history;
+  list<SimpleShip*> current;
 
 public:
   Port(int, double, double);
@@ -33,9 +35,9 @@ public:
   int getId() const;
   double getX() const;
   double getY() const;
-  std::list<Container*> getContainers();
-  std::list<SimpleShip*> getHistory();
-  std::list<SimpleShip*> getCurrent();
+  list<Container*> getContainers();
+  list<SimpleShip*> getHistory();
+  list<SimpleShip*> getCurrent();
 
   double getDistance(Port*) const;
   void incomingShip(SimpleShip*);
@@ -45,7 +47,7 @@ public:
   void add(Container*);
   void remove(Container*);
 
-  std::string toString() const;
+  string toString() const;
 };
 
 //Constructors
@@ -77,15 +79,15 @@ double Port::getY() const{
   return y;
 }
 
-std::list<Container*> Port::getContainers() {
+list<Container*> Port::getContainers() {
   return containers;
 }
 
-std::list<SimpleShip*> Port::getHistory() {
+list<SimpleShip*> Port::getHistory() {
   return history;
 }
 
-std::list<SimpleShip*> Port::getCurrent() {
+list<SimpleShip*> Port::getCurrent() {
   return current;
 }
 
@@ -121,9 +123,48 @@ void Port::remove(Container *container){
   containers.remove(container);
 }
 
-std::string Port::toString() const{
-  std::stringstream ss;
-  //ss << "Port " << id << " (" << x << ", " << y << ")" << endl;
-  return "0";
+string Port::toString() const{
+  stringstream ss;
+  ss << "Port " << id << ": (" << x << ", " << y << ")" << '\n';
+
+  ss << '\t' << "Light Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == LIGHT){
+      ss << " " << (*it)->getId();
+    }
+  }
+  ss << endl;
+
+  ss << '\t' << "Heavy Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == HEAVY){
+      ss << " " << (*it)->getId();
+    }
+  }
+  ss << endl;
+
+  ss << '\t' << "Refrigerated Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == REFRIGERATED){
+      ss << " " << (*it)->getId();
+    }
+  }
+  ss << endl;
+
+  ss << '\t' << "Liquid Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == LIQUID){
+      ss << " " << (*it)->getId();
+    }
+  }
+  ss << endl;
+
+  for (list<SimpleShip*>::const_iterator it = current.begin(); it != current.end(); ++it){
+    ss << (*it)->toString();
+    ss << endl;
+  }
+  
+
+  return ss.str();
 }
 #endif

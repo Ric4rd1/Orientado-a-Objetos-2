@@ -19,6 +19,8 @@
 #include "simpleship.h"
 #include "port.h"
 
+using namespace std;
+
 class Ship : public SimpleShip {
 private:
   int currentWeight, totalWeight;
@@ -28,7 +30,7 @@ private:
   int currentNumberOfLiquidContainers, maxNumberOfLiquidContainers;
   double fuel, fuelConsumptionPerKM;
   Port *currentPort;
-  std::list<Container*> containers;
+  list<Container*> containers;
 
   bool contains(Container*);
   void remove(Container*);
@@ -51,14 +53,14 @@ public:
   double getFuel() const;
   double getFuelConsumptionPerKM() const;
   Port* getCurrentPort() const;
-  std::list<Container*> getCurrentContainers() const;
+  list<Container*> getCurrentContainers() const;
 
   bool sailTo(Port*);
   void reFuel(double);
   bool load(Container*);
   bool unLoad(Container*);
 
-  std::string toString() const;
+  string toString() const;
 };
 
 //Constructors
@@ -156,7 +158,7 @@ Port* Ship::getCurrentPort() const{
   return currentPort;
 }
 
-std::list<Container*> Ship::getCurrentContainers() const{
+list<Container*> Ship::getCurrentContainers() const{
   return containers;
 }
 
@@ -167,7 +169,7 @@ bool Ship::sailTo(Port *port){
   } else {
     double distance = currentPort->getDistance(port);
   double acum = 0;
-    for (std::list<Container*>::iterator it = containers.begin(); it != containers.end(); it++){
+    for (list<Container*>::iterator it = containers.begin(); it != containers.end(); it++){
       acum += (*it)->getConsumption();
     }
     double fuelConsumption = (distance * fuelConsumptionPerKM) + (acum);
@@ -221,7 +223,7 @@ bool Ship::load(Container *container){
 }
 
 bool Ship::contains(Container *container){
-  std::list<Container*>::iterator it;
+  list<Container*>::iterator it;
   for (it = containers.begin(); it != containers.end(); it++){
     if (*it == container){
       return true;
@@ -231,7 +233,7 @@ bool Ship::contains(Container *container){
 }
 
 void Ship::remove(Container *container){
-  std::list<Container*>::iterator it;
+  list<Container*>::iterator it;
   for (it = containers.begin(); it != containers.end(); it++){
     if (*it == container){
       containers.erase(it);
@@ -259,9 +261,42 @@ bool Ship::unLoad(Container *container){
   }
 }
 
-std::string Ship::toString() const{
-  std::stringstream aux;
-  aux << "Ship " << id << " (" << currentPort->getId() << ") " << currentWeight << "/" << totalWeight << " " << currentNumberOfAllContainers << "/" << maxNumberOfAllContainers << " " << currentNumberOfHeavyContainers << "/" << maxNumberOfHeavyContainers << " " << currentNumberOfRefrigeratedContainers << "/" << maxNumberOfRefrigeratedContainers << " " << currentNumberOfLiquidContainers << "/" << maxNumberOfLiquidContainers << " " << fuel << "/" << fuelConsumptionPerKM << std::endl;
+string Ship::toString() const{
+  stringstream aux;
+  aux << '\t' << endl;
+  aux << "Ship " << id << ": " << fuel << endl;
+
+  aux << '\t' << '\t' << "Light Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == LIGHT){
+      aux << " " << (*it)->getId();
+    }
+  }
+  aux << endl;
+
+  aux << '\t' << '\t' << "Heavy Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == HEAVY){
+      aux << " " << (*it)->getId();
+    }
+  }
+  aux << endl;
+
+  aux << '\t' << '\t' << "Refrigerated Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == REFRIGERATED){
+      aux << " " << (*it)->getId();
+    }
+  }
+  aux << endl;
+
+  aux << '\t' << '\t' << "Liquid Containers:";
+  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+    if ((*it)->getType() == LIQUID){
+      aux << " " << (*it)->getId();
+    }
+  }
+  aux << endl;
   return aux.str();
 }
 

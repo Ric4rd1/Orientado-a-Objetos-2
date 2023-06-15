@@ -20,7 +20,7 @@ int main(int argc, char* argv[]) {
   ofstream outputFile;
 
   vector<Container*> containers;
-  vector<SimpleShip*> ships;
+  vector<Ship*> ships;
   vector<Port*> ports;
 
   int idContainer, idPort, idShip;
@@ -41,68 +41,84 @@ int main(int argc, char* argv[]) {
 
   outputFile.open(argv[2]);
 
+  //outputFile << "pepo peg" << '\n';
   // TO DO
-  /*
-  container
-  puertos
-  ship
-*/
 
   inputFile>>c>>s>>p>>n;
 
   for(int i = 0 ; i <= n ; i++){
-
     int eventType;
     inputFile>> eventType;
-    int weight = 0;
-    string type = "";
-
+    
     switch (eventType){
       case (1): //Create a container
-        inputFile>> idPort;
+        int weight, initPort;
+        char type;
+        inputFile>> initPort;
         inputFile>> weight;
         inputFile>> type;
 
-        if (type == "B"){
-          if (weight <= 3500){
+        if (type == 'B'){
+          if (weight <= 3000){
             containers[idContainer] = new LightContainer(idContainer, weight);
-
           } else {
             containers[idContainer] = new HeavyContainer(idContainer, weight);
           }
-        } else if (type == "R"){
+        } else if (type == 'R'){
           containers[idContainer] = new RefrigeratedContainer(idContainer, weight);
-        } else if (type == "L"){
+        } else if (type == 'L'){
           containers[idContainer] = new LiquidContainer(idContainer, weight);
         }
-        *ports[idPort].add(containers[idContainer]);
+        ports[initPort]->add(containers[idContainer]);
         idContainer++;
-
       break;
       case (2): //Create a ship
+          int totalWeight, maxAll, maxHeavy, maxRefrigerated, maxLiquid;
+          double fuelConsumption;
+          inputFile>> initPort; inputFile>> totalWeight; inputFile>> maxAll; inputFile>> maxHeavy; 
+          inputFile>> maxRefrigerated; inputFile>> maxLiquid; inputFile>> fuelConsumption;
 
+          ships[idShip] = new Ship(idShip, ports[initPort], totalWeight, maxAll, maxHeavy, maxRefrigerated, maxLiquid, fuelConsumption);
+
+          idShip++;
       break;
       case (3): //Create a port
+          double x, y;
+          inputFile>> x; inputFile>> y;
 
+          ports[idPort] = new Port(idPort, x, y);
+          idPort++;
       break;
       case (4): //Load a container to a ship
+          int shipId, containerId;
+          inputFile>> shipId; inputFile>> containerId;
 
+          ships[shipId]->load(containers[containerId]);
       break;
       case (5): //Unload a container from a ship
+          inputFile>> shipId; inputFile>> containerId;
 
+          ships[shipId]->unLoad(containers[containerId]);
       break;
       case (6): //Sail a ship to a port
+          int portId;
+          inputFile>> shipId; inputFile>> portId;
 
+          ships[shipId]->sailTo(ports[portId]);
       break;
       case (7): //Refuel a ship
+          double fuel;
+          inputFile>> shipId; inputFile>> fuel;
 
+          ships[shipId]->reFuel(fuel);
       break;
     }
-
   }
 
-  ports[idPorts] = new Port(idPorts, x, y);
-  idPorts++;
+  for (int i = 0; i < ports.size(); i++){
+    outputFile<<ports[i]->toString()<<endl;
+    outputFile<<endl;
+  }
 
   inputFile.close();
   outputFile.close();
