@@ -79,7 +79,7 @@ int main(int argc, char* argv[]) {
           inputFile>> maxRefrigerated; inputFile>> maxLiquid; inputFile>> fuelConsumption;
 
           ships[idShip] = new Ship(idShip, ports[initPort], totalWeight, maxAll, maxHeavy, maxRefrigerated, maxLiquid, fuelConsumption);
-
+          
           idShip++;
       break;
       case (3): //Create a port

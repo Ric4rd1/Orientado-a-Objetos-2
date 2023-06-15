@@ -98,7 +98,9 @@ double Port::getDistance(Port *other) const{
 
 void Port::incomingShip(SimpleShip *ship){
   if (find(current.begin(), current.end(), ship) == current.end()){
+    current.sort();
     current.push_back(ship);
+    current.sort();
   }
 }
 
@@ -125,8 +127,11 @@ void Port::remove(Container *container){
 
 string Port::toString() const{
   stringstream ss;
+  ss << std::fixed << std::setprecision(2);
+
   ss << "Port " << id << ": (" << x << ", " << y << ")" << '\n';
 
+  if (containers.size() == 0){
   ss << '\t' << "Light Containers:";
   for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
     if ((*it)->getType() == LIGHT){
@@ -158,13 +163,12 @@ string Port::toString() const{
     }
   }
   ss << endl;
-
+  }
   for (list<SimpleShip*>::const_iterator it = current.begin(); it != current.end(); ++it){
     ss << (*it)->toString();
     ss << endl;
   }
   
-
   return ss.str();
 }
 #endif

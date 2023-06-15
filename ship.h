@@ -263,9 +263,12 @@ bool Ship::unLoad(Container *container){
 
 string Ship::toString() const{
   stringstream aux;
+  aux << std::fixed << std::setprecision(2);
+
   aux << '\t' << endl;
   aux << "Ship " << id << ": " << fuel << endl;
 
+  if(currentNumberOfAllContainers != 0){
   aux << '\t' << '\t' << "Light Containers:";
   for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
     if ((*it)->getType() == LIGHT){
@@ -297,6 +300,7 @@ string Ship::toString() const{
     }
   }
   aux << endl;
+  }
   return aux.str();
 }
 
