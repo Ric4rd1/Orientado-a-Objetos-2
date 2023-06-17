@@ -130,9 +130,9 @@ string Port::toString() const{
 
   ss << std::fixed << std::setprecision(2);
 
-  ss << "Port " << id << ": (" << x << ", " << y << ")---" << endl;
+  ss << "Port " << id << ": (" << x << ", " << y << ")" << endl;
   
-  std::cout << "printin containers..\n";
+  //std::cout << "printin containers..\n";
   if (containers.size() != 0){
 	  ss << '\t' << "Light Containers:";
 	  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
@@ -167,10 +167,9 @@ string Port::toString() const{
   	ss << endl;
   }
   
-   std::cout << "printin ships.." << current.size() << "...\n";
   for (list<SimpleShip*>::const_iterator it = current.begin(); it != current.end(); ++it){
+    ss << '\t';
     ss << (*it)->toString();
-    ss << endl;
   }
   
   return ss.str();

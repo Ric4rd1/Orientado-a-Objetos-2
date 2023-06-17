@@ -163,26 +163,26 @@ list<Container*> Ship::getCurrentContainers() const{
 }
 
 //Methods
-bool Ship::sailTo(Port *port){
-  if (currentPort == port){
-    return false;
-  } else {
-    double distance = currentPort->getDistance(port);
-  double acum = 0;
-    for (list<Container*>::iterator it = containers.begin(); it != containers.end(); it++){
-      acum += (*it)->getConsumption();
-    }
-    double fuelConsumption = (distance * fuelConsumptionPerKM) + (acum);
-    if (fuelConsumption > fuel){
-      return false;
-    } else {
-      fuel -= fuelConsumption;
-      currentPort->outgoingShip(this);
-      currentPort = port;
-      currentPort->incomingShip(this);
-      return true;
-    }
+bool Ship:: sailTo(Port *port){
+
+  
+  double distance = this->currentPort->getDistance(port);
+  float fuelConsumptionPerContainer = 0;
+
+  for (std::list<Container*>::iterator it = this->containers.begin(); it != this->containers.end(); ++it) {
+    fuelConsumptionPerContainer += (*it)->getConsumption();
   }
+
+  if(fuelConsumptionPerKM*distance+fuelConsumptionPerContainer < fuel){
+    fuel -= fuelConsumptionPerKM*distance+fuelConsumptionPerContainer;
+    this->currentPort->outgoingShip(this);
+    port->incomingShip(this);
+    this->currentPort = port;
+    return true;
+  }else{
+    return false;
+  }
+
 }
 
 void Ship::reFuel(double amount){
@@ -265,7 +265,6 @@ string Ship::toString() const{
   stringstream aux;
   aux << std::fixed << std::setprecision(2);
 
-  aux << '\t' << endl;
   aux << "Ship " << id << ": " << fuel << endl;
 
   if(currentNumberOfAllContainers != 0){

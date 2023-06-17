@@ -117,7 +117,7 @@ int main(int argc, char* argv[]) {
   }
 
   for (int i = 0; i < ports.size(); i++){
-    outputFile<<ports[i]->toString()<<endl;
+    outputFile<<ports[i]->toString();
     outputFile<<endl;
   }
 
