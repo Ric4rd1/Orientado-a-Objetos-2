@@ -25,6 +25,15 @@ int main(int argc, char* argv[]) {
 
   int idContainer, idPort, idShip;
   idContainer = idPort = idShip = 0;
+  int eventType;
+  int weight, initPort;
+  char type;
+  int totalWeight, maxAll, maxHeavy, maxRefrigerated, maxLiquid;
+  double fuelConsumption;
+  double x, y;
+  int portId;
+  int shipId, containerId;
+  double fuel;
 
   int c, s, p, n;
 
@@ -41,19 +50,17 @@ int main(int argc, char* argv[]) {
 
   outputFile.open(argv[2]);
 
-  //outputFile << "pepo peg" << '\n';
-  // TO DO
-
   inputFile>>c>>s>>p>>n;
+  
+  containers.resize(c);
+  ships.resize(s);
+  ports.resize(p);
 
-  for(int i = 0 ; i <= n ; i++){
-    int eventType;
+  for(int i = 0 ; i < n ; i++){
     inputFile>> eventType;
     
     switch (eventType){
       case (1): //Create a container
-        int weight, initPort;
-        char type;
         inputFile>> initPort;
         inputFile>> weight;
         inputFile>> type;
@@ -73,24 +80,20 @@ int main(int argc, char* argv[]) {
         idContainer++;
       break;
       case (2): //Create a ship
-          int totalWeight, maxAll, maxHeavy, maxRefrigerated, maxLiquid;
-          double fuelConsumption;
           inputFile>> initPort; inputFile>> totalWeight; inputFile>> maxAll; inputFile>> maxHeavy; 
           inputFile>> maxRefrigerated; inputFile>> maxLiquid; inputFile>> fuelConsumption;
 
           ships[idShip] = new Ship(idShip, ports[initPort], totalWeight, maxAll, maxHeavy, maxRefrigerated, maxLiquid, fuelConsumption);
-          
+          ports[initPort]->incomingShip(ships[idShip]);
           idShip++;
       break;
       case (3): //Create a port
-          double x, y;
           inputFile>> x; inputFile>> y;
 
           ports[idPort] = new Port(idPort, x, y);
           idPort++;
       break;
       case (4): //Load a container to a ship
-          int shipId, containerId;
           inputFile>> shipId; inputFile>> containerId;
 
           ships[shipId]->load(containers[containerId]);
@@ -101,13 +104,11 @@ int main(int argc, char* argv[]) {
           ships[shipId]->unLoad(containers[containerId]);
       break;
       case (6): //Sail a ship to a port
-          int portId;
           inputFile>> shipId; inputFile>> portId;
 
           ships[shipId]->sailTo(ports[portId]);
       break;
       case (7): //Refuel a ship
-          double fuel;
           inputFile>> shipId; inputFile>> fuel;
 
           ships[shipId]->reFuel(fuel);

@@ -127,43 +127,47 @@ void Port::remove(Container *container){
 
 string Port::toString() const{
   stringstream ss;
+
   ss << std::fixed << std::setprecision(2);
 
-  ss << "Port " << id << ": (" << x << ", " << y << ")" << '\n';
+  ss << "Port " << id << ": (" << x << ", " << y << ")---" << endl;
+  
+  std::cout << "printin containers..\n";
+  if (containers.size() != 0){
+	  ss << '\t' << "Light Containers:";
+	  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+		if ((*it)->getType() == LIGHT){
+		  ss << " " << (*it)->getId();
+		}
+	  }
+	  ss << endl;
 
-  if (containers.size() == 0){
-  ss << '\t' << "Light Containers:";
-  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
-    if ((*it)->getType() == LIGHT){
-      ss << " " << (*it)->getId();
-    }
-  }
-  ss << endl;
+	  ss << '\t' << "Heavy Containers:";
+	  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+		if ((*it)->getType() == HEAVY){
+		  ss << " " << (*it)->getId();
+		}
+	  }
+	  ss << endl;
 
-  ss << '\t' << "Heavy Containers:";
-  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
-    if ((*it)->getType() == HEAVY){
-      ss << " " << (*it)->getId();
-    }
-  }
-  ss << endl;
+	  ss << '\t' << "Refrigerated Containers:";
+	  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+		if ((*it)->getType() == REFRIGERATED){
+		  ss << " " << (*it)->getId();
+		}
+	  }
+	  ss << endl;
 
-  ss << '\t' << "Refrigerated Containers:";
-  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
-    if ((*it)->getType() == REFRIGERATED){
-      ss << " " << (*it)->getId();
-    }
+	  ss << '\t' << "Liquid Containers:";
+	  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
+		if ((*it)->getType() == LIQUID){
+		  ss << " " << (*it)->getId();
+		}
+	  }
+  	ss << endl;
   }
-  ss << endl;
-
-  ss << '\t' << "Liquid Containers:";
-  for (list<Container*>::const_iterator it = containers.begin(); it != containers.end(); ++it){
-    if ((*it)->getType() == LIQUID){
-      ss << " " << (*it)->getId();
-    }
-  }
-  ss << endl;
-  }
+  
+   std::cout << "printin ships.." << current.size() << "...\n";
   for (list<SimpleShip*>::const_iterator it = current.begin(); it != current.end(); ++it){
     ss << (*it)->toString();
     ss << endl;
